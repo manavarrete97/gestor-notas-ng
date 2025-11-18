@@ -28,6 +28,8 @@ export class NotaComponent implements OnInit {
   };
   selectedEstudiante: number = 0;
   selectedMateria: number = 0;
+  showModal = false;
+  notaToEdit: any = {};
 
   constructor(
     private notaService: NotaService,
@@ -65,9 +67,16 @@ export class NotaComponent implements OnInit {
   getNotas() {
     if (this.selectedEstudiante && this.selectedMateria) {
       this.notaService.getNota(this.selectedEstudiante, this.selectedMateria).subscribe({
-        next: (data) => this.notas = data,
+        next: (data) => {
+          if (data) {
+            this.notas = Array.isArray(data) ? data : [data];
+          } else {
+            this.notas = [];
+          }
+        },
         error: (error) => {
-          this.notificationService.show('Error al cargar notas', 'error');
+          this.notas = [];
+          this.notificationService.show('Error al cargar notas o no existen notas para esta selección', 'error');
           console.error('Error fetching notas', error);
         }
       });
@@ -75,49 +84,27 @@ export class NotaComponent implements OnInit {
   }
 
   addNota() {
-    if (this.nota.id) {
-      this.notaService.updateNota(this.nota.id, 1, this.nota.valor).subscribe({
-        next: () => {
-          this.getNotas();
-          this.resetForm();
-          this.notificationService.show('Nota actualizada con éxito');
-          this.confettiService.launchConfetti();
-        },
-        error: (error) => {
-          this.notificationService.show('Error al actualizar nota', 'error');
-          console.error('Error updating nota', error);
-        }
-      });
-    } else {
-      this.notaService.addNota(this.nota).subscribe({
-        next: () => {
-          this.getNotas();
-          this.resetForm();
-          this.notificationService.show('Nota agregada con éxito');
-          this.confettiService.launchConfetti();
-        },
-        error: (error) => {
-          this.notificationService.show('Error al agregar nota', 'error');
-          console.error('Error adding nota', error);
-        }
-      });
-    }
-  }
+    const estudiante = this.estudiantes.find(e => e.id === this.selectedEstudiante);
+    const materia = this.materias.find(m => m.id === this.selectedMateria);
 
-  editNota(nota: any) {
-    this.nota = { ...nota };
-  }
-
-  deleteNota(idNota: number) {
-    this.notaService.deleteNota(idNota, 1).subscribe({
+    const newNota = {
+      nombre: this.nota.nombre,
+      idMateria: this.selectedMateria,
+      idEstudiante: this.selectedEstudiante,
+      valor: this.nota.valor,
+      materiaNombre: materia ? materia.nombre : '',
+      estudianteNombre: estudiante ? estudiante.nombre : ''
+    };
+    this.notaService.addNota(newNota).subscribe({
       next: () => {
         this.getNotas();
-        this.notificationService.show('Nota eliminada con éxito');
+        this.resetForm();
+        this.notificationService.show('Nota agregada con éxito');
         this.confettiService.launchConfetti();
       },
       error: (error) => {
-        this.notificationService.show('Error al eliminar nota', 'error');
-        console.error('Error deleting nota', error);
+        this.notificationService.show('Error al agregar nota', 'error');
+        console.error('Error adding nota', error);
       }
     });
   }
@@ -132,12 +119,7 @@ export class NotaComponent implements OnInit {
     };
   }
 
-  onEstudianteChange() {
-    this.getNotas();
-    this.resetForm();
-  }
-
-  onMateriaChange() {
+  onFilterChange() {
     this.getNotas();
     this.resetForm();
   }

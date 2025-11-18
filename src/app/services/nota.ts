@@ -15,12 +15,16 @@ export class NotaService {
     return this.http.get(`${this.API_URL}?idEstudiante=${idEstudiante}&idMateria=${idMateria}`);
   }
 
+  getNotaDetalles(idNota: number): Observable<any> {
+    return this.http.get(`${this.API_URL}/details?idNota=${idNota}`);
+  }
+
   addNota(nota: any): Observable<any> {
     return this.http.post(this.API_URL, nota, { responseType: 'text' });
   }
 
   updateNota(idNota: number, idProfesor: number, valor: number): Observable<any> {
-    return this.http.put(`${this.API_URL}?idNota=${idNota}&idProfesor=${idProfesor}`, valor, { responseType: 'text' });
+    return this.http.put(`${this.API_URL}?idNota=${idNota}&idProfesor=${idProfesor}`, { valor }, { responseType: 'text' });
   }
 
   deleteNota(idNota: number, idProfesor: number): Observable<any> {

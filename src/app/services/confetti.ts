@@ -9,6 +9,12 @@ export class ConfettiService {
 
   public launchConfetti(): void {
     const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.zIndex = '1000';
     document.body.appendChild(canvas);
 
     const myConfetti = confetti.create(canvas, {
@@ -16,9 +22,9 @@ export class ConfettiService {
     });
 
     myConfetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
+      particleCount: 150,
+      spread: 180,
+      origin: { y: 0.5, x: 0.5 },
     });
 
     setTimeout(() => {

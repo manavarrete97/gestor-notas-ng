@@ -19,6 +19,8 @@ export class EstudianteComponent implements OnInit {
     id: 0,
     nombre: ''
   };
+  showModal = false;
+  estudianteToEdit: any = {};
 
   constructor(
     private estudianteService: EstudianteService,
@@ -43,51 +45,59 @@ export class EstudianteComponent implements OnInit {
   }
 
   addEstudiante() {
-    if (this.estudiante.id) {
-      this.estudianteService.updateEstudiante(this.estudiante).subscribe({
-        next: () => {
-          this.getEstudiantes();
-          this.resetForm();
-          this.notificationService.show('Estudiante actualizado con éxito');
-          this.confettiService.launchConfetti();
-        },
-        error: (error) => {
-          this.notificationService.show('Error al actualizar estudiante', 'error');
-          console.error('Error updating estudiante', error);
-        }
-      });
-    } else {
-      this.estudianteService.addEstudiante({ nombre: this.estudiante.nombre }).subscribe({
-        next: () => {
-          this.getEstudiantes();
-          this.resetForm();
-          this.notificationService.show('Estudiante agregado con éxito');
-          this.confettiService.launchConfetti();
-        },
-        error: (error) => {
-          this.notificationService.show('Error al agregar estudiante', 'error');
-          console.error('Error adding estudiante', error);
-        }
-      });
-    }
-  }
-
-  editEstudiante(estudiante: any) {
-    this.estudiante = { ...estudiante };
-  }
-
-  deleteEstudiante(id: number) {
-    this.estudianteService.deleteEstudiante(id).subscribe({
+    this.estudianteService.addEstudiante({ nombre: this.estudiante.nombre }).subscribe({
       next: () => {
         this.getEstudiantes();
-        this.notificationService.show('Estudiante eliminado con éxito');
+        this.resetForm();
+        this.notificationService.show('Estudiante agregado con éxito');
         this.confettiService.launchConfetti();
       },
       error: (error) => {
-        this.notificationService.show('Error al eliminar estudiante', 'error');
-        console.error('Error deleting estudiante', error);
+        this.notificationService.show('Error al agregar estudiante', 'error');
+        console.error('Error adding estudiante', error);
       }
     });
+  }
+
+  openEditModal(estudiante: any) {
+    this.estudianteToEdit = { ...estudiante };
+    this.showModal = true;
+  }
+
+  closeEditModal() {
+    this.showModal = false;
+    this.estudianteToEdit = {};
+  }
+
+  updateEstudiante() {
+    this.estudianteService.updateEstudiante(this.estudianteToEdit).subscribe({
+      next: () => {
+        this.getEstudiantes();
+        this.closeEditModal();
+        this.notificationService.show('Estudiante actualizado con éxito');
+        this.confettiService.launchConfetti();
+      },
+      error: (error) => {
+        this.notificationService.show('Error al actualizar estudiante', 'error');
+        console.error('Error updating estudiante', error);
+      }
+    });
+  }
+
+  deleteEstudiante(id: number) {
+    if (confirm('¿Está seguro de que desea eliminar este estudiante?')) {
+      this.estudianteService.deleteEstudiante(id).subscribe({
+        next: () => {
+          this.getEstudiantes();
+          this.notificationService.show('Estudiante eliminado con éxito');
+          this.confettiService.launchConfetti();
+        },
+        error: (error) => {
+          this.notificationService.show('Error al eliminar estudiante', 'error');
+          console.error('Error deleting estudiante', error);
+        }
+      });
+    }
   }
 
   resetForm() {

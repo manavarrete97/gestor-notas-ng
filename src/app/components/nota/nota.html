@@ -1,54 +1,56 @@
 <div class="container mt-4">
-    <h2>Gestión de Notas</h2>
-  
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="estudiante">Estudiante</label>
-          <select class="form-control" id="estudiante" [(ngModel)]="selectedEstudiante" (change)="onEstudianteChange()">
-            <option *ngFor="let est of estudiantes" [value]="est.id">{{ est.nombre }}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="materia">Materia</label>
-          <select class="form-control" id="materia" [(ngModel)]="selectedMateria" (change)="onMateriaChange()">
-            <option *ngFor="let mat of materias" [value]="mat.id">{{ mat.nombre }}</option>
-          </select>
-        </div>
+  <h2>Gestión de Notas</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="estudiante">Estudiante</label>
+        <select class="form-control" id="estudiante" [(ngModel)]="selectedEstudiante" (change)="onFilterChange()">
+          <option value="0" disabled>Seleccione un estudiante</option>
+          <option *ngFor="let est of estudiantes" [value]="est.id">{{ est.nombre }}</option>
+        </select>
       </div>
     </div>
-  
-    <div *ngIf="selectedEstudiante && selectedMateria">
-      <div class="card mt-4">
-        <div class="card-body">
-          <h5 class="card-title">{{ nota.id ? 'Editar Nota' : 'Agregar Nota' }}</h5>
-          <form (ngSubmit)="addNota()">
-            <div class="form-group">
-              <label for="nombre">Nombre</label>
-              <input type="text" class="form-control" id="nombre" [(ngModel)]="nota.nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-              <label for="valor">Valor</label>
-              <input type="number" class="form-control" id="valor" [(ngModel)]="nota.valor" name="valor" required>
-            </div>
-            <button type="submit" class="btn btn-primary">{{ nota.id ? 'Actualizar' : 'Agregar' }}</button>
-            <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">Cancelar</button>
-          </form>
-        </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="materia">Materia</label>
+        <select class="form-control" id="materia" [(ngModel)]="selectedMateria" (change)="onFilterChange()">
+          <option value="0" disabled>Seleccione una materia</option>
+          <option *ngFor="let mat of materias" [value]="mat.id">{{ mat.nombre }}</option>
+        </select>
       </div>
-  
-      <hr>
-  
-      <h3>Lista de Notas</h3>
+    </div>
+  </div>
+
+  <div *ngIf="selectedEstudiante && selectedMateria">
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Agregar Nota</h5>
+        <form (ngSubmit)="addNota()">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" [(ngModel)]="nota.nombre" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="valor">Valor</label>
+            <input type="number" class="form-control" id="valor" [(ngModel)]="nota.valor" name="valor" required min="0" max="5" step="0.1">
+          </div>
+          <button type="submit" class="btn btn-primary">Agregar</button>
+          <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>Lista de Notas</h3>
+    <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Valor</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -56,12 +58,9 @@
             <td>{{ n.id }}</td>
             <td>{{ n.nombre }}</td>
             <td>{{ n.valor }}</td>
-            <td>
-              <button class="btn btn-sm btn-warning" (click)="editNota(n)">Editar</button>
-              <button class="btn btn-sm btn-danger ml-2" (click)="deleteNota(n.id)">Eliminar</button>
-            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>

@@ -3,13 +3,13 @@
   
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ estudiante.id ? 'Editar Estudiante' : 'Agregar Estudiante' }}</h5>
+        <h5 class="card-title">Agregar Estudiante</h5>
         <form (ngSubmit)="addEstudiante()">
           <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" class="form-control" id="nombre" [(ngModel)]="estudiante.nombre" name="nombre" required>
           </div>
-          <button type="submit" class="btn btn-primary">{{ estudiante.id ? 'Actualizar' : 'Agregar' }}</button>
+          <button type="submit" class="btn btn-primary">Agregar</button>
           <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">Cancelar</button>
         </form>
       </div>
@@ -18,23 +18,52 @@
     <hr>
   
     <h3>Lista de Estudiantes</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let est of estudiantes">
-          <td>{{ est.id }}</td>
-          <td>{{ est.nombre }}</td>
-          <td>
-            <button class="btn btn-sm btn-warning" (click)="editEstudiante(est)">Editar</button>
-            <button class="btn btn-sm btn-danger ml-2" (click)="deleteEstudiante(est.id)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let est of estudiantes">
+            <td>{{ est.id }}</td>
+            <td>{{ est.nombre }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" (click)="openEditModal(est)">Editar</button>
+              <button class="btn btn-sm btn-danger ml-2" (click)="deleteEstudiante(est.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+<!-- Modal de Edición -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': showModal ? 'block' : 'none'}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Estudiante</h5>
+          <button type="button" class="close" (click)="closeEditModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateEstudiante()">
+            <div class="form-group">
+              <label for="editNombre">Nombre</label>
+              <input type="text" class="form-control" id="editNombre" [(ngModel)]="estudianteToEdit.nombre" name="editNombre" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show" [ngStyle]="{'display': showModal ? 'block' : 'none'}"></div>

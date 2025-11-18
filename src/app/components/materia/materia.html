@@ -3,17 +3,19 @@
   
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{ materia.id ? 'Editar Materia' : 'Agregar Materia' }}</h5>
+        <h5 class="card-title">Agregar Materia</h5>
         <form (ngSubmit)="addMateria()">
           <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" class="form-control" id="nombre" [(ngModel)]="materia.nombre" name="nombre" required>
           </div>
           <div class="form-group">
-            <label for="idProfesor">ID Profesor</label>
-            <input type="number" class="form-control" id="idProfesor" [(ngModel)]="materia.idProfesor" name="idProfesor" required>
+            <label for="idProfesor">Profesor</label>
+            <select class="form-control" id="idProfesor" [(ngModel)]="materia.idProfesor" name="idProfesor" required>
+              <option *ngFor="let p of profesores" [value]="p.id">{{ p.nombre }}</option>
+            </select>
           </div>
-          <button type="submit" class="btn btn-primary">{{ materia.id ? 'Actualizar' : 'Agregar' }}</button>
+          <button type="submit" class="btn btn-primary">Agregar</button>
           <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">Cancelar</button>
         </form>
       </div>
@@ -22,25 +24,59 @@
     <hr>
   
     <h3>Lista de Materias</h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>ID Profesor</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let mat of materias">
-          <td>{{ mat.id }}</td>
-          <td>{{ mat.nombre }}</td>
-          <td>{{ mat.idProfesor }}</td>
-          <td>
-            <button class="btn btn-sm btn-warning" (click)="editMateria(mat)">Editar</button>
-            <button class="btn btn-sm btn-danger ml-2" (click)="deleteMateria(mat.id)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>ID Profesor</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mat of materias">
+            <td>{{ mat.id }}</td>
+            <td>{{ mat.nombre }}</td>
+            <td>{{ mat.idProfesor }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" (click)="openEditModal(mat)">Editar</button>
+              <button class="btn btn-sm btn-danger ml-2" (click)="deleteMateria(mat.id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  
+  <!-- Edit Modal -->
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display': showModal ? 'block' : 'none'}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Materia</h5>
+          <button type="button" class="close" (click)="closeEditModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateMateria()">
+            <div class="form-group">
+              <label for="editNombre">Nombre</label>
+              <input type="text" class="form-control" id="editNombre" [(ngModel)]="materiaToEdit.nombre" name="editNombre" required>
+            </div>
+            <div class="form-group">
+              <label for="editIdProfesor">Profesor</label>
+              <select class="form-control" id="editIdProfesor" [(ngModel)]="materiaToEdit.idProfesor" name="editIdProfesor" required>
+                <option *ngFor="let p of profesores" [value]="p.id">{{ p.nombre }}</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-secondary ml-2" (click)="closeEditModal()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show" [ngStyle]="{'display': showModal ? 'block' : 'none'}"></div>
+  

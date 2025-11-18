@@ -1,0 +1,23 @@
+.navbar {
+    background: linear-gradient(to right, #8A2BE2, #4169E1);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar-dark .navbar-brand {
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item {
+    color: #343a40;
+}
+
+.dropdown-item:hover {
+    background-color: #e9ecef;
+}
