@@ -1,0 +1,46 @@
+<div class="container mt-4">
+    <h2>Gestión de Materias</h2>
+  
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ materia.id ? 'Editar Materia' : 'Agregar Materia' }}</h5>
+        <form (ngSubmit)="addMateria()">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" [(ngModel)]="materia.nombre" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="idProfesor">ID Profesor</label>
+            <input type="number" class="form-control" id="idProfesor" [(ngModel)]="materia.idProfesor" name="idProfesor" required>
+          </div>
+          <button type="submit" class="btn btn-primary">{{ materia.id ? 'Actualizar' : 'Agregar' }}</button>
+          <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <h3>Lista de Materias</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>ID Profesor</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mat of materias">
+          <td>{{ mat.id }}</td>
+          <td>{{ mat.nombre }}</td>
+          <td>{{ mat.idProfesor }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="editMateria(mat)">Editar</button>
+            <button class="btn btn-sm btn-danger ml-2" (click)="deleteMateria(mat.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

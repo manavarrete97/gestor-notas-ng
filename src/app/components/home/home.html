@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="jumbotron text-center">
+    <h1 class="display-4 gradient-text">¡Bienvenido al Gestor de Notas!</h1>
+    <p class="lead">Una aplicación para administrar estudiantes, materias y sus calificaciones de manera eficiente.</p>
+    <hr class="my-4">
+    <p>Utilice la barra de navegación para comenzar o seleccione una de las siguientes opciones.</p>
+    <button class="btn btn-success" (click)="launchConfetti()">¡Lanza Confeti!</button>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Gestión de Estudiantes</h5>
+          <p class="card-text">Agregue, edite y elimine estudiantes del sistema. Mantenga un registro actualizado de todos los alumnos.</p>
+          <a routerLink="/estudiantes" class="btn btn-primary mt-auto">Ir a Estudiantes</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Gestión de Materias</h5>
+          <p class="card-text">Administre las materias disponibles, asigne profesores y mantenga el catálogo de cursos al día.</p>
+          <a routerLink="/materias" class="btn btn-primary mt-auto">Ir a Materias</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Gestión de Notas</h5>
+          <p class="card-text">Consulte, asigne y modifique las calificaciones de los estudiantes para cada materia.</p>
+          <a routerLink="/notas" class="btn btn-primary mt-auto">Ir a Notas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

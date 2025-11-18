@@ -59,7 +59,8 @@
               "buildTarget": "gestor-notas-ng:build:production"
             },
             "development": {
-              "buildTarget": "gestor-notas-ng:build:development"
+              "buildTarget": "gestor-notas-ng:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

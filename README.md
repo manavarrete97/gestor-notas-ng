@@ -1,59 +1,77 @@
-# GestorNotasNg
+# Gestor de Notas - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
+Este proyecto es el frontend para la aplicación de gestión de notas, desarrollado con Angular.
 
-## Development server
+## Prerrequisitos
 
-To start a local development server, run:
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) y [Angular CLI](https://cli.angular.io/).
+
+## Configuración del Backend
+
+Antes de iniciar el frontend, es crucial que el backend esté en funcionamiento. La API debe estar disponible en `https://localhost:7206`.
+
+## Instalación
+
+1.  Clona este repositorio o descarga el código fuente.
+2.  Abre una terminal en la raíz del proyecto.
+3.  Instala las dependencias necesarias con el siguiente comando:
+
+    ```bash
+    npm install
+    ```
+
+## Servidor de Desarrollo
+
+Para iniciar el servidor de desarrollo local, ejecuta:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez que el servidor esté en marcha, abre tu navegador y navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si modificas algún archivo de código fuente.
 
-## Code scaffolding
+Este proyecto utiliza un proxy para redirigir las llamadas a la API y evitar problemas de CORS. La configuración del proxy se encuentra en `proxy.conf.json`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Funcionalidades
+
+La aplicación permite gestionar estudiantes, materias y notas.
+
+### Estudiantes
+
+-   **Listar estudiantes**: Muestra una lista de todos los estudiantes existentes.
+-   **Agregar estudiante**: Permite añadir un nuevo estudiante.
+-   **Editar estudiante**: Permite modificar el nombre de un estudiante existente.
+-   **Eliminar estudiante**: Elimina un estudiante de la lista.
+
+### Materias
+
+-   **Listar materias**: Muestra una lista de todas las materias.
+-   **Agregar materia**: Permite añadir una nueva materia, asignándole un profesor.
+-   **Editar materia**: Permite modificar el nombre y el profesor de una materia existente.
+-   **Eliminar materia**: Elimina una materia de la lista.
+
+### Notas
+
+-   **Filtrar por estudiante y materia**: Permite seleccionar un estudiante y una materia para ver las notas correspondientes.
+- a   **Listar notas**: Muestra las notas del estudiante en la materia seleccionada.
+-   **Agregar nota**: Permite añadir una nueva nota para el estudiante y la materia seleccionados.
+-   **Editar nota**: Permite modificar el valor de una nota existente.
+-   **Eliminar nota**: Elimina una nota de la lista.
+
+## Estructura del Proyecto
+
+-   `src/app/components`: Contiene los componentes de Angular para cada una de las vistas (estudiantes, materias, notas y navegación).
+-   `src/app/services`: Contiene los servicios de Angular que se comunican con la API del backend.
+-   `src/app/app.routes.ts`: Define las rutas de la aplicación.
+-   `proxy.conf.json`: Archivo de configuración del proxy para las llamadas a la API.
+-   `angular.json`: Archivo de configuración de Angular CLI, donde se especifica el uso del proxy.
+
+## Compilación
+
+Para compilar el proyecto para producción, ejecuta:
 
 ```bash
-ng generate component component-name
+ng build --prod
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Los artefactos de la compilación se guardarán en el directorio `dist/`.
