@@ -1,77 +1,70 @@
-# Gestor de Notas - Frontend
+# Gestor de Notas NG
 
-Este proyecto es el frontend para la aplicación de gestión de notas, desarrollado con Angular.
+Este proyecto es una aplicación construida con Angular para gestionar notas de estudiantes. Permite a los usuarios realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para estudiantes, materias y notas.
 
-## Prerrequisitos
+## Requisitos Previos
 
-Asegúrate de tener instalado [Node.js](https://nodejs.org/) y [Angular CLI](https://cli.angular.io/).
+Asegúrate de tener las siguientes herramientas instaladas en tu sistema:
 
-## Configuración del Backend
-
-Antes de iniciar el frontend, es crucial que el backend esté en funcionamiento. La API debe estar disponible en `https://localhost:7206`.
+*   **Node.js**: Versión 20.x o superior. Puedes descargarlo desde [nodejs.org](https://nodejs.org/).
+*   **Angular CLI**: Versión 20.3.8 o superior. Puedes instalarlo globalmente usando npm:
+    ```bash
+    npm install -g @angular/cli
+    ```
 
 ## Instalación
 
-1.  Clona este repositorio o descarga el código fuente.
-2.  Abre una terminal en la raíz del proyecto.
-3.  Instala las dependencias necesarias con el siguiente comando:
-
+1.  Clona el repositorio a tu máquina local:
+    ```bash
+    git clone https://github.com/manavarrete97/gestor-notas-ng.git
+    ```
+2.  Navega al directorio del proyecto:
+    ```bash
+    cd gestor-notas-ng
+    ```
+3.  Instala las dependencias del proyecto:
     ```bash
     npm install
     ```
 
 ## Servidor de Desarrollo
 
-Para iniciar el servidor de desarrollo local, ejecuta:
+Para ejecutar la aplicación en un entorno de desarrollo, utiliza el siguiente comando:
 
 ```bash
 ng serve
 ```
 
-Una vez que el servidor esté en marcha, abre tu navegador y navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si modificas algún archivo de código fuente.
+Navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si cambias alguno de los archivos de origen.
 
-Este proyecto utiliza un proxy para redirigir las llamadas a la API y evitar problemas de CORS. La configuración del proxy se encuentra en `proxy.conf.json`.
+## Configuración del Backend
 
-## Funcionalidades
+Esta aplicación frontend está diseñada para funcionar con un backend API. La configuración de la URL del backend se encuentra en el archivo `proxy.conf.json`.
 
-La aplicación permite gestionar estudiantes, materias y notas.
-
-### Estudiantes
-
--   **Listar estudiantes**: Muestra una lista de todos los estudiantes existentes.
--   **Agregar estudiante**: Permite añadir un nuevo estudiante.
--   **Editar estudiante**: Permite modificar el nombre de un estudiante existente.
--   **Eliminar estudiante**: Elimina un estudiante de la lista.
-
-### Materias
-
--   **Listar materias**: Muestra una lista de todas las materias.
--   **Agregar materia**: Permite añadir una nueva materia, asignándole un profesor.
--   **Editar materia**: Permite modificar el nombre y el profesor de una materia existente.
--   **Eliminar materia**: Elimina una materia de la lista.
-
-### Notas
-
--   **Filtrar por estudiante y materia**: Permite seleccionar un estudiante y una materia para ver las notas correspondientes.
-- a   **Listar notas**: Muestra las notas del estudiante en la materia seleccionada.
--   **Agregar nota**: Permite añadir una nueva nota para el estudiante y la materia seleccionados.
--   **Editar nota**: Permite modificar el valor de una nota existente.
--   **Eliminar nota**: Elimina una nota de la lista.
-
-## Estructura del Proyecto
-
--   `src/app/components`: Contiene los componentes de Angular para cada una de las vistas (estudiantes, materias, notas y navegación).
--   `src/app/services`: Contiene los servicios de Angular que se comunican con la API del backend.
--   `src/app/app.routes.ts`: Define las rutas de la aplicación.
--   `proxy.conf.json`: Archivo de configuración del proxy para las llamadas a la API.
--   `angular.json`: Archivo de configuración de Angular CLI, donde se especifica el uso del proxy.
-
-## Compilación
-
-Para compilar el proyecto para producción, ejecuta:
-
-```bash
-ng build --prod
+```json
+{
+    "/api": {
+      "target": "https://localhost:7206",
+      "secure": false,
+      "changeOrigin": true
+    }
+}
 ```
 
-Los artefactos de la compilación se guardarán en el directorio `dist/`.
+Si tu backend se está ejecutando en un puerto diferente, asegúrate de actualizar el valor de `target` en este archivo para que coincida con la URL de tu backend.
+
+## Funcionalidad
+
+El Gestor de Notas NG proporciona las siguientes características:
+
+*   **Gestión de Estudiantes**: Crea, visualiza, edita y elimina estudiantes.
+*   **Gestión de Materias**: Crea, visualiza, edita y elimina materias.
+*   **Gestión de Notas**: Asigna, actualiza y elimina las notas de los estudiantes para diferentes materias.
+*   **Notificaciones**: Notificaciones en tiempo real para las acciones del usuario.
+*   **Efecto Confeti**: Una pequeña celebración cuando se crea una nueva nota con una calificación perfecta.
+
+## Autor
+
+*   **Mateo Navarrete Rua**
+
+¡Gracias por usar Gestor de Notas!
